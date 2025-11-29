@@ -304,18 +304,14 @@ impl<W: WriteColor> SearchWorker<W> {
         cmd.arg(path).stdin(Stdio::from(File::open(path)?));
 
         let mut rdr = self.command_builder.build(&mut cmd).map_err(|err| {
-            io::Error::new(
-                io::ErrorKind::Other,
-                format!(
-                    "preprocessor command could not start: '{cmd:?}': {err}",
-                ),
-            )
+            io::Error::other(format!(
+                "preprocessor command could not start: '{cmd:?}': {err}"
+            ))
         })?;
         let result = self.search_reader(path, &mut rdr).map_err(|err| {
-            io::Error::new(
-                io::ErrorKind::Other,
-                format!("preprocessor command failed: '{cmd:?}': {err}"),
-            )
+            io::Error::other(format!(
+                "preprocessor command failed: '{cmd:?}': {err}"
+            ))
         });
         let close_result = rdr.close();
         let search_result = result?;

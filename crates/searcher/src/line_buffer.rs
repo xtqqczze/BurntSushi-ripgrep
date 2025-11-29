@@ -36,7 +36,7 @@ impl Default for BufferAllocation {
 /// reached.
 pub(crate) fn alloc_error(limit: usize) -> io::Error {
     let msg = format!("configured allocation limit ({}) exceeded", limit);
-    io::Error::new(io::ErrorKind::Other, msg)
+    io::Error::other(msg)
 }
 
 /// The behavior of binary detection in the line buffer.

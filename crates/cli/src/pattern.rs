@@ -38,7 +38,7 @@ impl std::fmt::Display for InvalidPatternError {
 
 impl From<InvalidPatternError> for io::Error {
     fn from(paterr: InvalidPatternError) -> io::Error {
-        io::Error::new(io::ErrorKind::Other, paterr)
+        io::Error::other(paterr)
     }
 }
 
@@ -82,17 +82,10 @@ pub fn pattern_from_bytes(
 pub fn patterns_from_path<P: AsRef<Path>>(path: P) -> io::Result<Vec<String>> {
     let path = path.as_ref();
     let file = std::fs::File::open(path).map_err(|err| {
-        io::Error::new(
-            io::ErrorKind::Other,
-            format!("{}: {}", path.display(), err),
-        )
+        io::Error::other(format!("{}: {}", path.display(), err))
     })?;
-    patterns_from_reader(file).map_err(|err| {
-        io::Error::new(
-            io::ErrorKind::Other,
-            format!("{}:{}", path.display(), err),
-        )
-    })
+    patterns_from_reader(file)
+        .map_err(|err| io::Error::other(format!("{}:{}", path.display(), err)))
 }
 
 /// Read patterns from stdin, one per line.
@@ -104,9 +97,8 @@ pub fn patterns_from_path<P: AsRef<Path>>(path: P) -> io::Result<Vec<String>> {
 pub fn patterns_from_stdin() -> io::Result<Vec<String>> {
     let stdin = io::stdin();
     let locked = stdin.lock();
-    patterns_from_reader(locked).map_err(|err| {
-        io::Error::new(io::ErrorKind::Other, format!("<stdin>:{}", err))
-    })
+    patterns_from_reader(locked)
+        .map_err(|err| io::Error::other(format!("<stdin>:{}", err)))
 }
 
 /// Read patterns from any reader, one per line.
@@ -148,10 +140,9 @@ pub fn patterns_from_reader<R: io::Read>(rdr: R) -> io::Result<Vec<String>> {
                 patterns.push(pattern.to_string());
                 Ok(true)
             }
-            Err(err) => Err(io::Error::new(
-                io::ErrorKind::Other,
-                format!("{}: {}", line_number, err),
-            )),
+            Err(err) => {
+                Err(io::Error::other(format!("{}: {}", line_number, err)))
+            }
         }
     })?;
     Ok(patterns)
