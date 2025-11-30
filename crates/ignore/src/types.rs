@@ -539,26 +539,26 @@ mod tests {
         ]
     }
 
-    matched!(match1, types(), vec!["rust"], vec![], "lib.rs");
-    matched!(match2, types(), vec!["html"], vec![], "index.html");
-    matched!(match3, types(), vec!["html"], vec![], "index.htm");
-    matched!(match4, types(), vec!["html", "rust"], vec![], "main.rs");
-    matched!(match5, types(), vec![], vec![], "index.html");
-    matched!(match6, types(), vec![], vec!["rust"], "index.html");
-    matched!(match7, types(), vec!["foo"], vec!["rust"], "main.foo");
-    matched!(match8, types(), vec!["combo"], vec![], "index.html");
-    matched!(match9, types(), vec!["combo"], vec![], "lib.rs");
-    matched!(match10, types(), vec!["py"], vec![], "main.py");
-    matched!(match11, types(), vec!["python"], vec![], "main.py");
+    matched!(match1, types(), ["rust"], [], "lib.rs");
+    matched!(match2, types(), ["html"], [], "index.html");
+    matched!(match3, types(), ["html"], [], "index.htm");
+    matched!(match4, types(), ["html", "rust"], [], "main.rs");
+    matched!(match5, types(), [], [], "index.html");
+    matched!(match6, types(), [], ["rust"], "index.html");
+    matched!(match7, types(), ["foo"], ["rust"], "main.foo");
+    matched!(match8, types(), ["combo"], [], "index.html");
+    matched!(match9, types(), ["combo"], [], "lib.rs");
+    matched!(match10, types(), ["py"], [], "main.py");
+    matched!(match11, types(), ["python"], [], "main.py");
 
-    matched!(not, matchnot1, types(), vec!["rust"], vec![], "index.html");
-    matched!(not, matchnot2, types(), vec![], vec!["rust"], "main.rs");
-    matched!(not, matchnot3, types(), vec!["foo"], vec!["rust"], "main.rs");
-    matched!(not, matchnot4, types(), vec!["rust"], vec!["foo"], "main.rs");
-    matched!(not, matchnot5, types(), vec!["rust"], vec!["foo"], "main.foo");
-    matched!(not, matchnot6, types(), vec!["combo"], vec![], "leftpad.js");
-    matched!(not, matchnot7, types(), vec!["py"], vec![], "index.html");
-    matched!(not, matchnot8, types(), vec!["python"], vec![], "doc.md");
+    matched!(not, matchnot1, types(), ["rust"], [], "index.html");
+    matched!(not, matchnot2, types(), [], ["rust"], "main.rs");
+    matched!(not, matchnot3, types(), ["foo"], ["rust"], "main.rs");
+    matched!(not, matchnot4, types(), ["rust"], ["foo"], "main.rs");
+    matched!(not, matchnot5, types(), ["rust"], ["foo"], "main.foo");
+    matched!(not, matchnot6, types(), ["combo"], [], "leftpad.js");
+    matched!(not, matchnot7, types(), ["py"], [], "index.html");
+    matched!(not, matchnot8, types(), ["python"], [], "doc.md");
 
     #[test]
     fn test_invalid_defs() {

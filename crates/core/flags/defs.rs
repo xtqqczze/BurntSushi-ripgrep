@@ -7614,7 +7614,7 @@ mod tests {
 
     #[test]
     fn available_shorts() {
-        let mut total = vec![false; 128];
+        let mut total = [false; 128];
         for byte in 0..=0x7F {
             match byte {
                 b'.' | b'0'..=b'9' | b'A'..=b'Z' | b'a'..=b'z' => {
@@ -7624,7 +7624,7 @@ mod tests {
             }
         }
 
-        let mut taken = vec![false; 128];
+        let mut taken = [false; 128];
         for flag in FLAGS.iter() {
             let Some(short) = flag.name_short() else { continue };
             taken[usize::from(short)] = true;
@@ -7691,7 +7691,7 @@ mod tests {
 
     #[test]
     fn shorts_no_duplicates() {
-        let mut taken = vec![false; 128];
+        let mut taken = [false; 128];
         for flag in FLAGS.iter() {
             let Some(short) = flag.name_short() else { continue };
             let long = flag.name_long();
