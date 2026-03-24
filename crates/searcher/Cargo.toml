@@ -14,7 +14,7 @@ license = "Unlicense OR MIT"
 edition = "2024"
 
 [dependencies]
-bstr = { version = "1.6.2", default-features = false, features = ["std"] }
+bstr = { version = "1.7.0", default-features = false, features = ["std"] }
 encoding_rs = "0.8.33"
 encoding_rs_io = "0.1.7"
 grep-matcher = { version = "0.1.8", path = "../matcher" }
